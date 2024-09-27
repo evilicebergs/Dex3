@@ -46,6 +46,11 @@ struct PokemonDetail: View {
             }
             .padding()
             
+            Text("Stats")
+                .font(.title)
+                .padding(.bottom, -7)
+            Stats()
+                .environmentObject(SamplePokemon.samplePokemon)
         }
         .navigationTitle(pokemon.name!.capitalized)
         .toolbar {
@@ -53,14 +58,12 @@ struct PokemonDetail: View {
                 Button {
                     showShiny.toggle()
                 } label: {
-                    Image(systemName: showShiny ? "wand.and.stars" : "wamd.and.stars.inverse")
-                        .foregroundStyle(showShiny ? .yellow : .clear)
-//                    if showShiny {
-//                        Image(systemName: "wand.and.stars")
-//                            .foregroundStyle(.yellow)
-//                    } else {
-//                        Image(systemName: "wamd.and.stars.inverse")
-//                    }
+                    if showShiny {
+                        Image(systemName: "wand.and.stars")
+                            .foregroundStyle(.yellow)
+                    } else {
+                        Image(systemName: "wand.and.stars.inverse")
+                    }
                 }
             }
         }
