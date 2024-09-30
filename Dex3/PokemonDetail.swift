@@ -12,7 +12,9 @@ struct PokemonDetail: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var pokemon: Pokemon
-    
+    //use this wrappper to see changes dynamicly in other views(here in stats)
+    //for example updation favorite star
+    //Adding an object to a view’s environment makes the object available to subviews in the view’s hierarchy
     @State var showShiny = false
     
     var body: some View {
@@ -33,7 +35,7 @@ struct PokemonDetail: View {
                 }
             }
             HStack {
-                ForEach(pokemon.types!, id: \.self) { type in
+                ForEach((pokemon.types as? [String])!, id: \.self) { type in
                     Text(type.capitalized)
                         .font(.title2)
                         .shadow(color: .white, radius: 2)
@@ -46,24 +48,24 @@ struct PokemonDetail: View {
                 Spacer()
                 
                 Button {
-                    pokemon.favorite.toggle()
-                    
-                    do {
-                        try viewContext.save()
-                    } catch {
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    withAnimation {
+                        pokemon.favorite.toggle()
+                        do {
+                            try viewContext.save()
+                        } catch {
+                            let nsError = error as NSError
+                            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                        }
                     }
                 } label: {
-                    if pokemon.favorite {
-                        Image(systemName: "star.fill")
-                    } else {
-                        Image(systemName: "star")
-                    }
+                        if pokemon.favorite {
+                            Image(systemName: "star.fill")
+                        } else {
+                            Image(systemName: "star")
+                        }
                 }
                 .font(.title)
                 .foregroundStyle(.yellow)
-
             }
             .padding()
             
@@ -71,7 +73,7 @@ struct PokemonDetail: View {
                 .font(.title)
                 .padding(.bottom, -7)
             Stats()
-                .environmentObject(SamplePokemon.samplePokemon)
+                .environmentObject(pokemon)
         }
         .navigationTitle(pokemon.name!.capitalized)
         .toolbar {

@@ -22,7 +22,8 @@ struct ContentView: View {
     private var favorites: FetchedResults<Pokemon>
     
     @State var filterByFavorites = false
-    @State private var pokemonVM = PokemonViewModel(controller: FetchController())
+    @StateObject private var pokemonVM = PokemonViewModel(controller: FetchController())
+    
     var body: some View {
         switch pokemonVM.status {
         case .success:
@@ -50,7 +51,8 @@ struct ContentView: View {
                 .navigationTitle("Pokedex")
                 .navigationDestination(for: Pokemon.self, destination: { pokemon in
                     PokemonDetail()
-                        .environmentObject(SamplePokemon.samplePokemon)
+                        .environmentObject(pokemon)
+                    //Adding an object to a view’s environment makes the object available to subviews in the view’s hierarchy
                 })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -68,10 +70,6 @@ struct ContentView: View {
                     }
                 }
             }
-//        case .fetching:
-//            Text("Im Fetching")
-//        case .norStarted:
-//            Text("not started")
         default:
             ProgressView()
     }

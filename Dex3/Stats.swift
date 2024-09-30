@@ -10,6 +10,7 @@ import Charts
 
 struct Stats: View {
     @EnvironmentObject var pokemon: Pokemon
+    //Adding an object to a view’s environment makes the object available to subviews in the view’s hierarchy
     var body: some View {
         Chart(pokemon.stats) { stat in
             BarMark(
@@ -25,7 +26,7 @@ struct Stats: View {
         }
         .frame(height: 200)
         .padding([.leading, .bottom, .trailing])
-        .foregroundStyle(Color(pokemon.types![0].capitalized))
+        .foregroundStyle(Color((pokemon.types![0] as? String)!.capitalized))
         .chartXScale(domain: 0...pokemon.highestStat.value + 8)
     }
 }
