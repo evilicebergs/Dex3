@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct PokemonDetail: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var pokemon: Pokemon
     
@@ -43,6 +44,26 @@ struct PokemonDetail: View {
                     
                 }
                 Spacer()
+                
+                Button {
+                    pokemon.favorite.toggle()
+                    
+                    do {
+                        try viewContext.save()
+                    } catch {
+                        let nsError = error as NSError
+                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    }
+                } label: {
+                    if pokemon.favorite {
+                        Image(systemName: "star.fill")
+                    } else {
+                        Image(systemName: "star")
+                    }
+                }
+                .font(.title)
+                .foregroundStyle(.yellow)
+
             }
             .padding()
             
