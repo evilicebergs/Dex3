@@ -67,7 +67,7 @@ struct FetchController {
         
         let fetchRequest: NSFetchRequest<Pokemon> = Pokemon.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id IN %@", [1, 386])
-        
+            //checking if pokemon 1 and 386 exist
         do {
             let checkPokemon = try context.fetch(fetchRequest)
             
