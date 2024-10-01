@@ -18,8 +18,6 @@ struct WidgetPokemon: View {
     
     var body: some View {
         ZStack {
-            Color((pokemon.types![0] as? String)!.capitalized)
-            
             switch widgetSize {
             case .small:
                 FetchedImage(url: pokemon.sprite)
@@ -29,7 +27,7 @@ struct WidgetPokemon: View {
                     
                     VStack(alignment: .leading) {
                         Text(pokemon.name!.capitalized)
-                            .font(.title)
+                            .font(.title2)
                         
                         Text((pokemon.types! as? [String])!.joined(separator: ", ").capitalized)
                     }
@@ -61,6 +59,6 @@ struct WidgetPokemon: View {
 }
 
 #Preview {
-    WidgetPokemon(widgetSize: .large)
+    WidgetPokemon(widgetSize: .medium)
         .environmentObject(SamplePokemon.samplePokemon)
 }

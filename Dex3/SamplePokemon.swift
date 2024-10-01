@@ -10,7 +10,8 @@ import CoreData
 
 struct SamplePokemon {
     //value context should be in the main actor
-    @MainActor static let samplePokemon = {
+    @MainActor
+    static let samplePokemon = {
             let context = PersistenceController.preview.container.viewContext
             let fetchRequest: NSFetchRequest<Pokemon> = Pokemon.fetchRequest()
             fetchRequest.fetchLimit = 1
