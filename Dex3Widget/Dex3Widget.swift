@@ -12,25 +12,16 @@ import CoreData
 struct Provider: @preconcurrency AppIntentTimelineProvider {
     
     var randomPokemon: Pokemon {
-        
         let context = PersistenceController.shared.container.viewContext
-        
         let fetchRequest: NSFetchRequest<Pokemon> = Pokemon.fetchRequest()
         
-        var results: [Pokemon] = []
-        
         do {
-            results = try context.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest)
+            return results.randomElement() ?? SamplePokemon.samplePokemon
         } catch {
-            print("Couldnt fetch \(error)")
+            print("Couldn't fetch \(error)")
+            return SamplePokemon.samplePokemon
         }
-        
-        if let randomPokemon = results.randomElement() {
-            return randomPokemon
-        }
-        
-        return SamplePokemon.samplePokemon
-        
     }
     @MainActor func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationAppIntent(), pokemon: SamplePokemon.samplePokemon)
@@ -75,21 +66,21 @@ struct Dex3WidgetEntryView : View {
             case .systemSmall:
                 WidgetPokemon(widgetSize: .small)
                     .environmentObject(entry.pokemon)
-                    .containerBackground(for: .widget) {
-                        Color((entry.pokemon.types![0] as? String)!.capitalized)
-                    }
+//                    .containerBackground(for: .widget) {
+//                        Color((entry.pokemon.types![0] as? String)!.capitalized)
+//                    }
             case .systemMedium:
                 WidgetPokemon(widgetSize: .medium)
                     .environmentObject(entry.pokemon)
-                    .containerBackground(for: .widget) {
-                        Color((entry.pokemon.types![0] as? String)!.capitalized)
-                    }
+//                    .containerBackground(for: .widget) {
+//                        Color((entry.pokemon.types![0] as? String)!.capitalized)
+//                    }
             case .systemLarge:
                 WidgetPokemon(widgetSize: .large)
                     .environmentObject(entry.pokemon)
-                    .containerBackground(for: .widget) {
-                        Color((entry.pokemon.types![0] as? String)!.capitalized)
-                    }
+//                    .containerBackground(for: .widget) {
+//                        Color((entry.pokemon.types![0] as? String)!.capitalized)
+//                    }
             default:
                 WidgetPokemon(widgetSize: .small)
                     .environmentObject(entry.pokemon)

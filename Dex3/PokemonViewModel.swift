@@ -43,8 +43,14 @@ class PokemonViewModel: ObservableObject {
                 let newPokemon = Pokemon(context: PersistenceController.shared.container.viewContext)
                 newPokemon.id = Int16(pokemon.id)
                 newPokemon.name = pokemon.name
-                newPokemon.types = pokemon.types as NSArray
-                //newPokemon.organizeTypes()
+                var newArr: [String] = []
+                if pokemon.types.first == "normal" && pokemon.types.count == 2 {
+                    newArr = pokemon.types
+                    newArr.swapAt(0, 1)
+                    newPokemon.types = newArr as NSArray
+                } else {
+                    newPokemon.types = pokemon.types as NSArray
+                }
                 newPokemon.hp = Int16(pokemon.hp)
                 newPokemon.attack = Int16(pokemon.attack)
                 newPokemon.defence = Int16(pokemon.defence)
@@ -60,6 +66,7 @@ class PokemonViewModel: ObservableObject {
             status = .success
         } catch {
             status = .failed(error: error)
+            print(error)
         }
     }
 }

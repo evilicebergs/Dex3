@@ -49,7 +49,7 @@ struct PersistenceController {
             } else {
                 print("Failed to retrieve container URL. Check App Group configuration.")
             }
-            container.persistentStoreDescriptions.first!.url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.evilicebergs.NewDex3Group")!.appending(path: "Dex3.sqlite")
+            container.persistentStoreDescriptions.first!.url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.evilicebergs.debdex3group")!.appending(path: "Dex3.sqlite")
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
