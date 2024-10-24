@@ -66,24 +66,20 @@ struct Dex3WidgetEntryView : View {
             case .systemSmall:
                 WidgetPokemon(widgetSize: .small)
                     .environmentObject(entry.pokemon)
-//                    .containerBackground(for: .widget) {
-//                        Color((entry.pokemon.types![0] as? String)!.capitalized)
-//                    }
+                    .containerBackground(for: .widget) { }
             case .systemMedium:
                 WidgetPokemon(widgetSize: .medium)
                     .environmentObject(entry.pokemon)
-//                    .containerBackground(for: .widget) {
-//                        Color((entry.pokemon.types![0] as? String)!.capitalized)
-//                    }
+                    .containerBackground(for: .widget) { }
             case .systemLarge:
-                WidgetPokemon(widgetSize: .large)
-                    .environmentObject(entry.pokemon)
-//                    .containerBackground(for: .widget) {
-//                        Color((entry.pokemon.types![0] as? String)!.capitalized)
-//                    }
+                    WidgetPokemon(widgetSize: .large)
+                        .environmentObject(entry.pokemon)
+                        .containerBackground(for: .widget) { }
             default:
                 WidgetPokemon(widgetSize: .small)
+                    Color.yellow
                     .environmentObject(entry.pokemon)
+                    .containerBackground(for: .widget) { }
             }
             
     }
@@ -97,6 +93,7 @@ struct Dex3Widget: Widget {
             Dex3WidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
+        .contentMarginsDisabled()
     }
 }
 
@@ -114,7 +111,7 @@ extension ConfigurationAppIntent {
     }
 }
 
-#Preview(as: .systemMedium) {
+#Preview(as: .systemLarge) {
     Dex3Widget()
 } timeline: {
     SimpleEntry(date: .now, configuration: .smiley, pokemon: SamplePokemon.samplePokemon)

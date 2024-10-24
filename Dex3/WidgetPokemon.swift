@@ -18,6 +18,7 @@ struct WidgetPokemon: View {
     
     var body: some View {
         ZStack {
+            Color((pokemon.types![0] as? String)!.capitalized)
             switch widgetSize {
             case .small:
                 FetchedImage(url: pokemon.sprite)
@@ -55,6 +56,7 @@ struct WidgetPokemon: View {
                 .padding()
             }
         }
+        .foregroundStyle(.black)
     }
 }
 
